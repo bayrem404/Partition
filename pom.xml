@@ -43,6 +43,7 @@
         <junitPlatformRunner>1.2.0</junitPlatformRunner>
         <hamcrest>2.1</hamcrest>
         <mockitoAll>1.9.5</mockitoAll>
+        <slf4jJdk14Version>1.7.30</slf4jJdk14Version>
     </properties>
     <dependencies>
         <dependency>
@@ -80,7 +81,14 @@
             <artifactId>slf4j-api</artifactId>
             <version>${slf4jVersion}</version>
         </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-jdk14</artifactId>
+            <version>${slf4jJdk14Version}</version>
+        </dependency>
     </dependencies>
+
+
 
 
 </project>
