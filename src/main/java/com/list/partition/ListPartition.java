@@ -10,7 +10,6 @@ public class ListPartition<T> implements ListPartitionInterface<T> {
     @Override
     public Collection<List<T>> partition(List<T> list, int chunkSize) {
         AtomicInteger counter = new AtomicInteger();
-
         return list.stream()
                 .collect(Collectors.groupingBy(it -> counter.getAndIncrement() / chunkSize))
                 .values();
