@@ -38,7 +38,7 @@ public class ListPartitionTest {
     }
 
     @Test
-    public void partition_shouldReturnListsFromEmptyListList() {
+    public void partition_shouldReturnEmptyListFromEmptyList() {
 
         List<Object> l = Collections.emptyList();
         Collection<List<String>> actual= listPartition.partition(l,3);
@@ -46,21 +46,21 @@ public class ListPartitionTest {
     }
 
     @Test
-    public void partition_shouldReturnListsFromNullChunkSizeList() {
+    public void partition_shouldReturnListsWhenChunkSizeIsNegativeInt() {
         List<Object> l = Arrays.asList(new Object(),new String(),Long.valueOf(27), 32d, Boolean.valueOf(true));
         Collection<List<String>> actual= listPartition.partition(l, -3);
         assertThat(actual.size(), Is.is(2));
     }
 
     @Test
-    public void partition_shouldReturnListsWhenListSizEqualChunkSize() {
+    public void partition_shouldReturnOneListWhenListSizeISEqualToChunkSize() {
         List<Object> l = Arrays.asList(new Object(),new String(),Long.valueOf(27), 32d, Boolean.valueOf(true));
         Collection<List<String>> actual= listPartition.partition(l, 5);
         assertThat(actual.size(), Is.is(1));
     }
 
     @Test
-    public void partition_shouldReturnListsWhenListSizeLessThanChunkSize() {
+    public void partition_shouldReturnOneListWhenListSizeISLessThanChunkSize() {
         List<Object> l = Arrays.asList(new Object(),new String(),Long.valueOf(27), 32d, Boolean.valueOf(true));
         Collection<List<String>> actual= listPartition.partition(l, 8);
         assertThat(actual.size(), Is.is(1));
