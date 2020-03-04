@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
-public class ListPartition<T> implements ListElement<T>{
+public class ListPartition<T> implements ListPartitionInterface<T> {
 
     @Override
     public Collection<List<T>> partition(List<T> list, int chunkSize) {
