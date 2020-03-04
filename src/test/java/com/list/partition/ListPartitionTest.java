@@ -2,6 +2,7 @@ package com.list.partition;
 
 import static org.junit.Assert.*;
 
+import com.list.partition.exception.NotAuthorizedSizeException;
 import org.hamcrest.core.Is;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -63,6 +64,13 @@ public class ListPartitionTest {
     public void partition_shouldReturnOneListWhenListSizeISLessThanChunkSize() {
         List<Object> l = Arrays.asList(new Object(),new String(),Long.valueOf(27), 32d, Boolean.valueOf(true));
         Collection<List<String>> actual= listPartition.partition(l, 8);
+        assertThat(actual.size(), Is.is(1));
+    }
+
+    @Test(expected = NotAuthorizedSizeException.class)
+    public void partition_shouldReturnOneListWhenListSizeISLessThanChunkSiz() {
+        List<Object> l = Arrays.asList(new Object(),new String(),Long.valueOf(27), 32d, Boolean.valueOf(true));
+        Collection<List<String>> actual= listPartition.partition(l, 0);
         assertThat(actual.size(), Is.is(1));
     }
 }
