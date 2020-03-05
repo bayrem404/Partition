@@ -11,6 +11,7 @@ public interface ListPartitionInterface<T> {
      * @param list
      * @param chunkSize
      * @return Collection of List
+     * @throws NotAuthorizedSizeException if chunkSize is less or equal zero
      */
     public Collection<List<T>> partition(List<T> list, int chunkSize) throws NotAuthorizedSizeException;
 }

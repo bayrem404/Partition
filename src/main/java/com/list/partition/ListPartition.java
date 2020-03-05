@@ -13,8 +13,6 @@ public class ListPartition<T> implements ListPartitionInterface<T> {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
 
-
-
     @Override
     public Collection<List<T>> partition(List<T> list, int chunkSize) throws NotAuthorizedSizeException {
         if (chunkSize < 0) {

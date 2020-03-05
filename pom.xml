@@ -87,8 +87,4 @@
             <version>${slf4jJdk14Version}</version>
         </dependency>
     </dependencies>
-
-
-
-
 </project>
