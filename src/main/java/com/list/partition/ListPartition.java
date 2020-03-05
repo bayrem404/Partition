@@ -17,6 +17,9 @@ public class ListPartition<T> implements ListPartitionInterface<T> {
 
     @Override
     public Collection<List<T>> partition(List<T> list, int chunkSize) throws NotAuthorizedSizeException {
+        if (chunkSize < 0) {
+            throw new NotAuthorizedSizeException("Negative size is not a valid size to perform the list partion.");
+        }
         AtomicInteger counter = new AtomicInteger();
 
         try {

@@ -51,10 +51,14 @@ public class ListPartitionTest {
     }
 
     @Test
-    public void partition_shouldReturnListsWhenChunkSizeIsNegativeInt() throws NotAuthorizedSizeException {
+    public void partition_shouldThrowNotAuthorizedSizeExceptionWhenChunkSizeIsNegativeInt() throws NotAuthorizedSizeException {
         List<Object> l = Arrays.asList(new Object(),new String(),Long.valueOf(27), 32d, Boolean.valueOf(true));
-        Collection<List<String>> actual= listPartition.partition(l, -3);
-        assertThat(actual.size(), is(2));
+        try {
+            listPartition.partition(l, -3);
+            fail();
+        } catch (NotAuthorizedSizeException exception) {
+            assertThat(exception.getMessage(), is("Negative size is not a valid size to perform the list partion."));
+        }
     }
 
     @Test
@@ -75,7 +79,7 @@ public class ListPartitionTest {
     public void partition_shouldThrowNotAuthorizedSizeExceptionWhenChunkSizeIsZero() throws NotAuthorizedSizeException {
         List<Object> l = Arrays.asList(new Object(),new String(),Long.valueOf(27), 32d, Boolean.valueOf(true));
         try {
-            Collection<List<String>> actual= listPartition.partition(l, 0);
+            listPartition.partition(l, 0);
             fail();
         } catch (NotAuthorizedSizeException exception) {
             assertThat(exception.getMessage(), is("zero is not a valid size to perform the list partion."));
