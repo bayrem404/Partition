@@ -1,15 +1,19 @@
 package com.list.partition;
 
-import static org.junit.Assert.*;
-
 import com.list.partition.exception.NotAuthorizedSizeException;
-import org.hamcrest.core.Is;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ListPartitionTest {
@@ -18,59 +22,63 @@ public class ListPartitionTest {
     private ListPartition listPartition;
 
     @Test
-    public void partition_shouldReturnListsFromIntegerList() {
+    public void partition_shouldReturnListsFromIntegerList() throws NotAuthorizedSizeException {
         List<Integer> l = Arrays.asList(1,2,3,4,5);
         Collection<List<Integer>> actual= listPartition.partition(l,2);
-        assertThat(actual.size(), Is.is(3));
+        assertThat(actual.size(), is(3));
     }
 
     @Test
-    public void partition_shouldReturnListsFromStringList() {
+    public void partition_shouldReturnListsFromStringList() throws NotAuthorizedSizeException {
         List<String> l = Arrays.asList("1","2","3","4","5","6");
         Collection<List<String>> actual= listPartition.partition(l,3);
-        assertThat(actual.size(), Is.is(2));
+        assertThat(actual.size(), is(2));
     }
     @Test
-    public void partition_shouldReturnListsFromObjectList() {
+    public void partition_shouldReturnListsFromObjectList() throws NotAuthorizedSizeException {
 
         List<Object> l = Arrays.asList(new Object(),new String(),Long.valueOf(27), 32d, Boolean.valueOf(true));
         Collection<List<String>> actual= listPartition.partition(l,3);
-        assertThat(actual.size(), Is.is(2));
+        assertThat(actual.size(), is(2));
     }
 
     @Test
-    public void partition_shouldReturnEmptyListFromEmptyList() {
+    public void partition_shouldReturnEmptyListFromEmptyList() throws NotAuthorizedSizeException {
 
         List<Object> l = Collections.emptyList();
         Collection<List<String>> actual= listPartition.partition(l,3);
-        assertThat(actual.size(), Is.is(0));
+        assertThat(actual.size(), is(0));
     }
 
     @Test
-    public void partition_shouldReturnListsWhenChunkSizeIsNegativeInt() {
+    public void partition_shouldReturnListsWhenChunkSizeIsNegativeInt() throws NotAuthorizedSizeException {
         List<Object> l = Arrays.asList(new Object(),new String(),Long.valueOf(27), 32d, Boolean.valueOf(true));
         Collection<List<String>> actual= listPartition.partition(l, -3);
-        assertThat(actual.size(), Is.is(2));
+        assertThat(actual.size(), is(2));
     }
 
     @Test
-    public void partition_shouldReturnOneListWhenListSizeISEqualToChunkSize() {
+    public void partition_shouldReturnOneListWhenListSizeISEqualToChunkSize() throws NotAuthorizedSizeException {
         List<Object> l = Arrays.asList(new Object(),new String(),Long.valueOf(27), 32d, Boolean.valueOf(true));
         Collection<List<String>> actual= listPartition.partition(l, 5);
-        assertThat(actual.size(), Is.is(1));
+        assertThat(actual.size(), is(1));
     }
 
     @Test
-    public void partition_shouldReturnOneListWhenListSizeISLessThanChunkSize() {
+    public void partition_shouldReturnOneListWhenListSizeISLessThanChunkSize() throws NotAuthorizedSizeException {
         List<Object> l = Arrays.asList(new Object(),new String(),Long.valueOf(27), 32d, Boolean.valueOf(true));
         Collection<List<String>> actual= listPartition.partition(l, 8);
-        assertThat(actual.size(), Is.is(1));
+        assertThat(actual.size(), is(1));
     }
 
-    @Test(expected = NotAuthorizedSizeException.class)
-    public void partition_shouldReturnOneListWhenListSizeISLessThanChunkSiz() {
+    @Test
+    public void partition_shouldThrowNotAuthorizedSizeExceptionWhenChunkSizeIsZero() throws NotAuthorizedSizeException {
         List<Object> l = Arrays.asList(new Object(),new String(),Long.valueOf(27), 32d, Boolean.valueOf(true));
-        Collection<List<String>> actual= listPartition.partition(l, 0);
-        assertThat(actual.size(), Is.is(1));
+        try {
+            Collection<List<String>> actual= listPartition.partition(l, 0);
+            fail();
+        } catch (NotAuthorizedSizeException exception) {
+            assertThat(exception.getMessage(), is("zero is not a valid size to perform the list partion."));
+        }
     }
 }

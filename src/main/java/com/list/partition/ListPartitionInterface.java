@@ -1,5 +1,7 @@
 package com.list.partition;
 
+import com.list.partition.exception.NotAuthorizedSizeException;
+
 import java.util.Collection;
 import java.util.List;
 
@@ -10,5 +12,5 @@ public interface ListPartitionInterface<T> {
      * @param chunkSize
      * @return Collection of List
      */
-    public Collection<List<T>> partition(List<T> list, int chunkSize);
+    public Collection<List<T>> partition(List<T> list, int chunkSize) throws NotAuthorizedSizeException;
 }

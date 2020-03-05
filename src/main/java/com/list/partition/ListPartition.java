@@ -16,15 +16,18 @@ public class ListPartition<T> implements ListPartitionInterface<T> {
 
 
     @Override
-    public Collection<List<T>> partition(List<T> list, int chunkSize) {
+    public Collection<List<T>> partition(List<T> list, int chunkSize) throws NotAuthorizedSizeException {
         AtomicInteger counter = new AtomicInteger();
+
         try {
-            return list.stream()
+            logger.info("Partionning {} to sub lists of size at most {}",list, chunkSize);
+            Collection<List<T>> partList = list.stream()
                     .collect(Collectors.groupingBy(it -> counter.getAndIncrement() / chunkSize))
                     .values();
+            logger.info("Partition result is : {}", partList);
+            return partList;
         } catch (ArithmeticException exception) {
             throw new NotAuthorizedSizeException("zero is not a valid size to perform the list partion.");
         }
-
     }
 }
